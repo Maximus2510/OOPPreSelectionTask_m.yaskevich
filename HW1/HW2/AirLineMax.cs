@@ -1,6 +1,7 @@
 ﻿using static System.Console;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace HW2
 {
@@ -71,7 +72,7 @@ namespace HW2
 
         public class Company
         {
-            private List<Plane> planes = new List<Plane>()
+            public List<Plane> Planes = new List<Plane>()
             {
                 new Plane("IL","Military", 20, 50, 5000),
                 new Plane("IL2", "Civil", 10, 20, 4000),
@@ -81,34 +82,29 @@ namespace HW2
             };
 
 
-            private string planeStrInList;
-            public string CreatePlane(Plane plane)
+            public bool CreatePlane(Plane plane)
             {
-                foreach (Plane planeStrInList in planes)
+                foreach (Plane planeStrInList in Planes)
                 {
-                    planeStrInList.ToString();
+                    if (planeStrInList.ToString() == plane.ToString())
+                    {
+                        return false;
+                        //WriteLine $"{plane}, already exists";
+                    }
                 }
 
-                if (plane.ToString() == planeStrInList)
-                {
-                    return $"{plane}, already exists";
-                }
-                else
-                {
-                    planes.Add(plane);
-                    return $"{plane}, created";
-                }
+                Planes.Add(plane);
+                return true;
             }
 
             public List<Plane> SortPlanesBySitsCount()
             {
-                List<Plane> result = planes.OrderBy(P => P.Seats).ToList();
-                return result;
+                return Planes.OrderBy(P => P.Seats).ToList();
             }
 
             public List<Plane> SortPlanesByRangeOfFlight()
             {
-                return planes.OrderBy(P => P.Capacity).ToList();
+                return Planes.OrderBy(P => P.Capacity).ToList();
             }
 
             public List<Plane> GetPlanesSortedByName()
@@ -118,28 +114,28 @@ namespace HW2
                 //                     orderby PlaneByName.Name 
                 //                     select PlaneByName;
 
-                var selectedPlanesByName = planes.Where(PlaneByName => PlaneByName.Name != null).OrderBy(PlaneByName => PlaneByName.Name);
+                var selectedPlanesByName = Planes.Where(PlaneByName => PlaneByName.Name != null).OrderBy(PlaneByName => PlaneByName.Name);
 
                 return selectedPlanesByName.ToList();
             }
 
             public List<Plane> GetPlanesSortedBySeatsCount()
             {
-                var selectedPlanesBySeats = planes.Where(PlaneBySeats => PlaneBySeats.Seats != 0).OrderBy(PlaneBySeats => PlaneBySeats.Seats);
+                var selectedPlanesBySeats = Planes.Where(PlaneBySeats => PlaneBySeats.Seats != 0).OrderBy(PlaneBySeats => PlaneBySeats.Seats);
 
                 return selectedPlanesBySeats.ToList();
             }
 
             public List<Plane> GetPlanesSortedByWeightCount()
             {
-                var selectedPlanesByWeight = planes.Where(PlaneByWeight => PlaneByWeight.Weight != 0).OrderBy(PlaneByWeight => PlaneByWeight.Weight);
+                var selectedPlanesByWeight = Planes.Where(PlaneByWeight => PlaneByWeight.Weight != 0).OrderBy(PlaneByWeight => PlaneByWeight.Weight);
 
                 return selectedPlanesByWeight.ToList();
             }
 
             public List<Plane> GetPlanesSortedByFlightCapacity()
             {
-                var selectedPlanesByFlightCapacity = planes.Where(PlaneByFlightCap => PlaneByFlightCap.Capacity != 0).OrderBy(PlaneByFlightCap => PlaneByFlightCap.Capacity);
+                var selectedPlanesByFlightCapacity = Planes.Where(PlaneByFlightCap => PlaneByFlightCap.Capacity != 0).OrderBy(PlaneByFlightCap => PlaneByFlightCap.Capacity);
 
                 return selectedPlanesByFlightCapacity.ToList();
             }
@@ -147,9 +143,9 @@ namespace HW2
             public int WeightsSumm()
             {
                 int weightOfPlanes = 0;
-                for (int i = 0; i < planes.Count; i++)
+                for (int i = 0; i < Planes.Count; i++)
                 {
-                    weightOfPlanes += planes[i].Weight;
+                    weightOfPlanes += Planes[i].Weight;
                 }
                 return weightOfPlanes;
             }
@@ -157,9 +153,9 @@ namespace HW2
             public int SeatsCountSumm()
             {
                 int seatsInPlanes = 0;
-                for (int i = 0; i < planes.Count; i++)
+                for (int i = 0; i < Planes.Count; i++)
                 {
-                    seatsInPlanes += planes[i].Seats;
+                    seatsInPlanes += Planes[i].Seats;
                 }
                 return seatsInPlanes;
             }
@@ -175,6 +171,13 @@ namespace HW2
                 Company = new Company();
             }
 
+            private void ShowPlanes()
+            {
+                foreach(Plane plane in Company.Planes)
+                {
+                    WriteLine(plane.ToString());
+                }
+            }
 
             private void CreatePlaneConsole()
             {
@@ -197,7 +200,14 @@ namespace HW2
 
                 Plane createdPlane = new Plane(planeName, planeUsage, planeSitsCount, planeWeight, planeFlightCap);
 
-                Company.CreatePlane(createdPlane);
+                if (Company.CreatePlane(createdPlane))
+                {
+                    WriteLine("Plane Created!");
+                }
+                else
+                {
+                    WriteLine("Plane with such parameters already exists!");
+                }
             }
 
             public void MainMenu() 
@@ -205,22 +215,30 @@ namespace HW2
                 string userInput = null; 
                 WriteLine("Hello, user");
 
-                for (;userInput=="3";)
+                for (;userInput!="3";)
                 {
                     WriteLine("Select any menu action:");
                     WriteLine("1. create");
                     WriteLine("2. show");
                     WriteLine("3. exit.");
+                    WriteLine();
                     userInput = ReadLine();
                     switch (userInput)
                     {
                         case "1":
+                            WriteLine();
                             CreatePlaneConsole();
+                            WriteLine();
                             break;
                         case "2":
+                            ShowPlanes();
+                            WriteLine();
                             break;
                         case "3":
+                            
                             WriteLine("Good bye!");
+                            Thread.Sleep(2500);
+
                             break;
 
                         default:
