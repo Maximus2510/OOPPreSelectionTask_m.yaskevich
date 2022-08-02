@@ -13,7 +13,7 @@ namespace HW2
         private int maxWeight;
         private double flightCapacity;
 
-        public Plane(string planeName, string planeUsage, int sitsCount, int maxWeight,double flightCapacity)
+        public Plane(string planeName, string planeUsage, int sitsCount, int maxWeight, double flightCapacity)
         {
             this.planeName = planeName;
             this.planeUsage = planeUsage;
@@ -84,7 +84,7 @@ namespace HW2
             private string planeStrInList;
             public string CreatePlane(Plane plane)
             {
-                foreach(Plane planeStrInList in planes)
+                foreach (Plane planeStrInList in planes)
                 {
                     planeStrInList.ToString();
                 }
@@ -167,9 +167,75 @@ namespace HW2
 
         }
 
+        public class ConsoleTrigger
+        {
+            public Company Company { get; set; }
+            public ConsoleTrigger()
+            {
+                Company = new Company();
+            }
+
+
+            private void CreatePlaneConsole()
+            {
+                string planeName = null;
+                string planeUsage = null;
+                int planeSitsCount = 0;
+                int planeWeight = 0;
+                double planeFlightCap = 0;
+
+                WriteLine("Enter Plane name: ");
+                planeName = ReadLine();
+                WriteLine("Enter Plane usage:");
+                planeUsage = ReadLine();
+                WriteLine("Enter Plane Sits Count:");
+                planeSitsCount = int.Parse(ReadLine());
+                WriteLine("Enter Plane Weight:");
+                planeWeight = int.Parse(ReadLine());
+                WriteLine("Enter Plane Flight Capacity:");
+                planeFlightCap = double.Parse(ReadLine());
+
+                Plane createdPlane = new Plane(planeName, planeUsage, planeSitsCount, planeWeight, planeFlightCap);
+
+                Company.CreatePlane(createdPlane);
+            }
+
+            public void MainMenu() 
+            {
+                string userInput = null; 
+                WriteLine("Hello, user");
+
+                for (;userInput=="3";)
+                {
+                    WriteLine("Select any menu action:");
+                    WriteLine("1. create");
+                    WriteLine("2. show");
+                    WriteLine("3. exit.");
+                    userInput = ReadLine();
+                    switch (userInput)
+                    {
+                        case "1":
+                            CreatePlaneConsole();
+                            break;
+                        case "2":
+                            break;
+                        case "3":
+                            WriteLine("Good bye!");
+                            break;
+
+                        default:
+                            System.Console.WriteLine("Wrong input!!!");
+                            break;
+                    }
+                }
+            }
+        }
+
+
         static void Main(string[] args)
         {
-            
+            ConsoleTrigger consoleTrigger = new ConsoleTrigger();
+            consoleTrigger.MainMenu();
             //Plane plane1 = new Plane("IL-1",200,5000,52895.50);
             //Plane plane2 = new Plane("IL-2", 3000, 4000, 8123.68);
             //Plane plane3 = new Plane("IL-3", 500, 2000, 9254.50);
