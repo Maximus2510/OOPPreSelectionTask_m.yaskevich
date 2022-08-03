@@ -193,38 +193,18 @@ namespace HW2
                 Company = new Company();
             }
 
-            int Input(int input)
-            {
-                return input;
-            }
-
-            string Input(string input)
-            {
-                return input;
-            }
-
-            double Input(double input)
-            {
-                return input;
-            }
-
             private void CreatePlaneConsole()
             {
                 WriteLine("Enter Plane name: ");
                 string inputName = ReadLine();
-                Input(inputName);
                 WriteLine("Enter Plane usage:");
                 string inputUsage = ReadLine();
-                Input(inputUsage);
                 WriteLine("Enter Plane Sits Count:");
                 int inputSitsCount = int.Parse(ReadLine());
-                Input(inputSitsCount);
                 WriteLine("Enter Plane Weight:");
                 int planeWeight = int.Parse(ReadLine());
-                Input(planeWeight);
                 WriteLine("Enter Plane Flight Capacity:");
                 double planeFlightCap = double.Parse(ReadLine());
-                Input(planeFlightCap);
 
                 Plane createdPlane = new Plane(inputName, inputUsage, inputSitsCount, planeWeight, planeFlightCap);
 
