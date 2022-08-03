@@ -126,11 +126,25 @@ namespace HW2
                 return selectedPlanesBySeats.ToList();
             }
 
+            public List<Plane> GetPlanesSortedBySeatsCountUserInput(int minInput, int maxInput)
+            {
+                var selectedPlanesBySeatsCountUserInput = Planes.Where(PlaneBySeats => PlaneBySeats.Seats > minInput && PlaneBySeats.Seats < maxInput).OrderBy(PlaneBySeats => PlaneBySeats.Seats);
+
+                return selectedPlanesBySeatsCountUserInput.ToList();
+            }
+
             public List<Plane> GetPlanesSortedByWeightCount()
             {
                 var selectedPlanesByWeight = Planes.Where(PlaneByWeight => PlaneByWeight.Weight != 0).OrderBy(PlaneByWeight => PlaneByWeight.Weight);
 
                 return selectedPlanesByWeight.ToList();
+            }
+
+            public List<Plane> GetPlanesSortedByWeightUserInput(int minInput, int maxInput)
+            {
+                var selectedPlanesByWeightUserInput = Planes.Where(PlaneBySeats => PlaneBySeats.Seats > minInput && PlaneBySeats.Seats < maxInput).OrderBy(PlaneBySeats => PlaneBySeats.Seats);
+
+                return selectedPlanesByWeightUserInput.ToList();
             }
 
             public List<Plane> GetPlanesSortedByFlightCapacity()
@@ -166,18 +180,12 @@ namespace HW2
         public class ConsoleTrigger
         {
             public Company Company { get; set; }
+
             public ConsoleTrigger()
             {
                 Company = new Company();
             }
 
-            private void ShowPlanes()
-            {
-                foreach(Plane plane in Company.Planes)
-                {
-                    WriteLine(plane.ToString());
-                }
-            }
 
             private void CreatePlaneConsole()
             {
@@ -209,18 +217,67 @@ namespace HW2
                     WriteLine("Plane with such parameters already exists!");
                 }
             }
+            private void ShowPlanes()
+            {
+                foreach (Plane plane in Company.Planes)
+                {
+                    WriteLine(plane.ToString());
+                }
+            }
+
+            private void SortPlanesBySeatsCount()
+            {
+
+                WriteLine("Enter min seats count value:");
+                int minInput = int.Parse(ReadLine());
+                WriteLine("Enter max seats count value:");
+                int maxInput = int.Parse(ReadLine());
+                WriteLine();
+
+                if (minInput < maxInput)
+                {
+                    var item = Company.GetPlanesSortedBySeatsCountUserInput(minInput,maxInput);
+                    item.ForEach(WriteLine);
+                }
+                else
+                {
+                    WriteLine("Min seats can't be higher than Max seats count! Enter correct seats count!");
+                }
+            }
+
+            private void SortPlanesByWeight()
+            {
+
+                WriteLine("Enter min weight count value:");
+                int minInput = int.Parse(ReadLine());
+                WriteLine("Enter max weight count value:");
+                int maxInput = int.Parse(ReadLine());
+                WriteLine();
+
+                if (minInput < maxInput)
+                {
+                    var item = Company.GetPlanesSortedByWeightUserInput(minInput, maxInput);
+                    item.ForEach(WriteLine);
+                }
+                else
+                {
+                    WriteLine("Min seats can't be higher than Max seats count! Enter correct seats count!");
+                }
+            }
 
             public void MainMenu() 
             {
                 string userInput = null; 
                 WriteLine("Hello, user");
 
-                for (;userInput!="3";)
+                for (;userInput!="0";)
                 {
                     WriteLine("Select any menu action:");
-                    WriteLine("1. create");
-                    WriteLine("2. show");
-                    WriteLine("3. exit.");
+                    WriteLine("1. create plane");
+                    WriteLine("2. show planes");
+                    WriteLine("3. sort planes by seats count");
+                    WriteLine("4. sort planes by weight");
+                    WriteLine("0. exit.");
                     WriteLine();
                     userInput = ReadLine();
                     switch (userInput)
@@ -235,14 +292,21 @@ namespace HW2
                             WriteLine();
                             break;
                         case "3":
-                            
+                            SortPlanesBySeatsCount();
+                            WriteLine();
+                            break;
+                        case "4":
+                            SortPlanesByWeight();
+                            WriteLine();
+                            break;
+                        case "0":
                             WriteLine("Good bye!");
                             Thread.Sleep(2500);
 
                             break;
 
                         default:
-                            System.Console.WriteLine("Wrong input!!!");
+                            WriteLine("Wrong input!!!");
                             break;
                     }
                 }
