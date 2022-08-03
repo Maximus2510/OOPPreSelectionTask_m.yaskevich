@@ -119,6 +119,13 @@ namespace HW2
                 return selectedPlanesByName.ToList();
             }
 
+            public List<Plane> GetPlanesByType(string userInputPlaneType)
+            {
+                var selectPlaneType = Planes.Where(PlaneByName => PlaneByName.Usage == userInputPlaneType).OrderBy(PlaneByName => PlaneByName.Name);
+                return selectPlaneType.ToList();
+
+            }
+
             public List<Plane> GetPlanesSortedBySeatsCount()
             {
                 var selectedPlanesBySeats = Planes.Where(PlaneBySeats => PlaneBySeats.Seats != 0).OrderBy(PlaneBySeats => PlaneBySeats.Seats);
@@ -133,7 +140,7 @@ namespace HW2
                 return selectedPlanesBySeatsCountUserInput.ToList();
             }
 
-            public List<Plane> GetPlanesSortedByWeightCount()
+            public List<Plane> GetPlanesSortedByWeight()
             {
                 var selectedPlanesByWeight = Planes.Where(PlaneByWeight => PlaneByWeight.Weight != 0).OrderBy(PlaneByWeight => PlaneByWeight.Weight);
 
@@ -186,27 +193,40 @@ namespace HW2
                 Company = new Company();
             }
 
+            int Input(int input)
+            {
+                return input;
+            }
+
+            string Input(string input)
+            {
+                return input;
+            }
+
+            double Input(double input)
+            {
+                return input;
+            }
 
             private void CreatePlaneConsole()
             {
-                string planeName = null;
-                string planeUsage = null;
-                int planeSitsCount = 0;
-                int planeWeight = 0;
-                double planeFlightCap = 0;
-
                 WriteLine("Enter Plane name: ");
-                planeName = ReadLine();
+                string inputName = ReadLine();
+                Input(inputName);
                 WriteLine("Enter Plane usage:");
-                planeUsage = ReadLine();
+                string inputUsage = ReadLine();
+                Input(inputUsage);
                 WriteLine("Enter Plane Sits Count:");
-                planeSitsCount = int.Parse(ReadLine());
+                int inputSitsCount = int.Parse(ReadLine());
+                Input(inputSitsCount);
                 WriteLine("Enter Plane Weight:");
-                planeWeight = int.Parse(ReadLine());
+                int planeWeight = int.Parse(ReadLine());
+                Input(planeWeight);
                 WriteLine("Enter Plane Flight Capacity:");
-                planeFlightCap = double.Parse(ReadLine());
+                double planeFlightCap = double.Parse(ReadLine());
+                Input(planeFlightCap);
 
-                Plane createdPlane = new Plane(planeName, planeUsage, planeSitsCount, planeWeight, planeFlightCap);
+                Plane createdPlane = new Plane(inputName, inputUsage, inputSitsCount, planeWeight, planeFlightCap);
 
                 if (Company.CreatePlane(createdPlane))
                 {
@@ -265,6 +285,36 @@ namespace HW2
                 }
             }
 
+            private void GetPlanesByType()
+            {
+                WriteLine("Enter plane type:     (e.g.: Militarty/Civil)");
+                string userInputPlaneType = ReadLine();
+                if (userInputPlaneType == "Military")
+                {
+                    var item = Company.GetPlanesByType(userInputPlaneType);
+                    item.ForEach(WriteLine);
+                }
+                else if(userInputPlaneType == "Civil")
+                {
+                    var item = Company.GetPlanesByType(userInputPlaneType);
+                    item.ForEach(WriteLine);
+                }
+                else
+                {
+                    WriteLine($"No such type of plane {userInputPlaneType}");
+                }
+            }
+
+            private void GetAllPlanesWeight()
+            {
+                WriteLine(Company.WeightsSumm());
+            }
+
+            private void GetAllPlanesSeatsCount()
+            {
+                WriteLine(Company.SeatsCountSumm());
+            }
+
             public void MainMenu() 
             {
                 string userInput = null; 
@@ -277,6 +327,9 @@ namespace HW2
                     WriteLine("2. show planes");
                     WriteLine("3. sort planes by seats count");
                     WriteLine("4. sort planes by weight");
+                    WriteLine("5. get planes by type");
+                    WriteLine("6. get all planes weight");
+                    WriteLine("7. get all planes flight capacity");
                     WriteLine("0. exit.");
                     WriteLine();
                     userInput = ReadLine();
@@ -297,6 +350,18 @@ namespace HW2
                             break;
                         case "4":
                             SortPlanesByWeight();
+                            WriteLine();
+                            break;
+                        case "5":
+                            GetPlanesByType();
+                            WriteLine();
+                            break;
+                        case "6":
+                            GetAllPlanesWeight();
+                            WriteLine();
+                            break;
+                        case "7":
+                            GetAllPlanesSeatsCount();
                             WriteLine();
                             break;
                         case "0":
