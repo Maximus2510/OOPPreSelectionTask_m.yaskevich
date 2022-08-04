@@ -2,19 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System;
 
 namespace HW2
 {
+
+    public enum PlaneType
+    {
+        Military,
+        Civil
+    }
+
     public class Plane
     {
 
         private string planeName;
-        private string planeUsage;
+        private PlaneType planeUsage;
         private int sitsCount;
         private int maxWeight;
         private double flightCapacity;
 
-        public Plane(string planeName, string planeUsage, int sitsCount, int maxWeight, double flightCapacity)
+        public Plane(string planeName, PlaneType planeUsage, int sitsCount, int maxWeight, double flightCapacity)
         {
             this.planeName = planeName;
             this.planeUsage = planeUsage;
@@ -29,7 +37,7 @@ namespace HW2
             set { planeName = value; }
         }
 
-        public string Usage
+        public PlaneType Usage
         {
             get { return planeUsage; }
             set { planeUsage = value; }
@@ -69,16 +77,25 @@ namespace HW2
             return ($"{Name}_{Usage}_{Seats}_{Weight}_{Capacity}");
         }
 
+        public class Military : Plane
+        {
+
+        }
+
+        public class Civil : Plane
+        {
+
+        }
 
         public class Company
         {
             public List<Plane> Planes = new List<Plane>()
             {
-                new Plane("IL","Military", 20, 50, 5000),
-                new Plane("IL2", "Civil", 10, 20, 4000),
-                new Plane("IL3", "Civil", 50, 150, 3000),
-                new Plane("IL4", "Military", 35, 80, 8000),
-                new Plane("IL5", "Civil", 40, 120, 5200),
+                new Plane("IL", PlaneType.Military, 20, 50, 5000),
+                new Plane("IL2", PlaneType.Civil, 10, 20, 4000),
+                new Plane("IL3", PlaneType.Civil, 50, 150, 3000),
+                new Plane("IL4", PlaneType.Military, 35, 80, 8000),
+                new Plane("IL5", PlaneType.Civil, 40, 120, 5200),
             };
 
 
@@ -119,7 +136,7 @@ namespace HW2
                 return selectedPlanesByName.ToList();
             }
 
-            public List<Plane> GetPlanesByType(string userInputPlaneType)
+            public List<Plane> GetPlanesByType(PlaneType userInputPlaneType)
             {
                 var selectPlaneType = Planes.Where(PlaneByName => PlaneByName.Usage == userInputPlaneType).OrderBy(PlaneByName => PlaneByName.Name);
                 return selectPlaneType.ToList();
@@ -197,8 +214,16 @@ namespace HW2
             {
                 WriteLine("Enter Plane name: ");
                 string inputName = ReadLine();
-                WriteLine("Enter Plane usage:");
-                string inputUsage = ReadLine();
+                WriteLine("Enter Plane usage,");
+                WriteLine("enter Military or Civil to create plane of such type.");
+                string inputUserPlaneType = ReadLine();
+                bool correctTypeInput = Enum.IsDefined(typeof(PlaneType), inputUserPlaneType);
+
+                if (!correctTypeInput)
+                {
+                    WriteLine("No such type of a plane!");
+                }
+                PlaneType type = (PlaneType)Enum.Parse(typeof(PlaneType), inputUserPlaneType);
                 WriteLine("Enter Plane Sits Count:");
                 int inputSitsCount = int.Parse(ReadLine());
                 WriteLine("Enter Plane Weight:");
@@ -206,7 +231,7 @@ namespace HW2
                 WriteLine("Enter Plane Flight Capacity:");
                 double planeFlightCap = double.Parse(ReadLine());
 
-                Plane createdPlane = new Plane(inputName, inputUsage, inputSitsCount, planeWeight, planeFlightCap);
+                Plane createdPlane = new Plane(inputName, type, inputSitsCount, planeWeight, planeFlightCap);
 
                 if (Company.CreatePlane(createdPlane))
                 {
@@ -267,21 +292,20 @@ namespace HW2
 
             private void GetPlanesByType()
             {
-                WriteLine("Enter plane type:     (e.g.: Militarty/Civil)");
-                string userInputPlaneType = ReadLine();
-                if (userInputPlaneType == "Military")
+                WriteLine("Enter plane type:     (e.g.: Military/Civil)");
+                //bool correctTypeInput = Enum.TryParse(ReadLine(),out PlaneType userInputPlaneType);
+                string inputUserPlaneType = ReadLine();
+                bool correctTypeInput = Enum.IsDefined(typeof(PlaneType), inputUserPlaneType);
+
+                if(correctTypeInput)
                 {
-                    var item = Company.GetPlanesByType(userInputPlaneType);
-                    item.ForEach(WriteLine);
-                }
-                else if(userInputPlaneType == "Civil")
-                {
-                    var item = Company.GetPlanesByType(userInputPlaneType);
-                    item.ForEach(WriteLine);
+                    PlaneType type = (PlaneType)Enum.Parse(typeof(PlaneType), inputUserPlaneType);
+                    var planeByType = Company.GetPlanesByType(type);
+                    planeByType.ForEach(WriteLine);
                 }
                 else
                 {
-                    WriteLine($"No such type of plane {userInputPlaneType}");
+                    Console.WriteLine("No such type of plane, Military and Civil plane types can be created!");
                 }
             }
 
