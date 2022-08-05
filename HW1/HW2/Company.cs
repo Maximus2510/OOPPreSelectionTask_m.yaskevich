@@ -37,24 +37,6 @@ namespace HW2
             {
                 return Planes.OrderBy(P => P.Seats).ToList();
             }
-
-            public List<Plane> SortPlanesByRangeOfFlight()
-            {
-                return Planes.OrderBy(P => P.Capacity).ToList();
-            }
-
-            public List<Plane> GetPlanesSortedByName()
-            {
-                //var selectedPlanes = from PlaneByName in planes
-                //                     where PlaneByName.Name != null
-                //                     orderby PlaneByName.Name 
-                //                     select PlaneByName;
-
-                var selectedPlanesByName = Planes.Where(PlaneByName => PlaneByName.Name != null).OrderBy(PlaneByName => PlaneByName.Name);
-
-                return selectedPlanesByName.ToList();
-            }
-
             public List<Plane> GetPlanesByType(PlaneType userInputPlaneType)
             {
                 var selectPlaneType = Planes.Where(PlaneByName => PlaneByName.Usage == userInputPlaneType).OrderBy(PlaneByName => PlaneByName.Name);

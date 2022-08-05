@@ -1,8 +1,0 @@
-C:\Users\Maksim_Yaskevich\Desktop\C#\HW1\HW1\bin\Debug\HW1.exe.config
-C:\Users\Maksim_Yaskevich\Desktop\C#\HW1\HW1\bin\Debug\HW1.exe
-C:\Users\Maksim_Yaskevich\Desktop\C#\HW1\HW1\bin\Debug\HW1.pdb
-C:\Users\Maksim_Yaskevich\Desktop\C#\HW1\HW1\obj\Debug\HW1.csproj.AssemblyReference.cache
-C:\Users\Maksim_Yaskevich\Desktop\C#\HW1\HW1\obj\Debug\HW1.csproj.SuggestedBindingRedirects.cache
-C:\Users\Maksim_Yaskevich\Desktop\C#\HW1\HW1\obj\Debug\HW1.csproj.CoreCompileInputs.cache
-C:\Users\Maksim_Yaskevich\Desktop\C#\HW1\HW1\obj\Debug\HW1.exe
-C:\Users\Maksim_Yaskevich\Desktop\C#\HW1\HW1\obj\Debug\HW1.pdb

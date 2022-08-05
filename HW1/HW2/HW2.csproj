@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AirLineMax.cs" />
+    <Compile Include="Plane.cs" />
     <Compile Include="Civil.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="ConsoleTrigger.cs" />

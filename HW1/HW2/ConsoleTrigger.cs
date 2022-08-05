@@ -125,7 +125,7 @@ namespace HW2
                 }
                 else
                 {
-                    Console.WriteLine("No such type of plane, Military and Civil plane types can be created!");
+                    Console.WriteLine("No such type of plane, only Military and Civil plane types can be found!");
                 }
             }
 
@@ -203,7 +203,9 @@ namespace HW2
                             break;
 
                         default:
+                            Console.Clear();
                             WriteLine("Wrong input!!!");
+                            WriteLine();
                             break;
                     }
                 }
