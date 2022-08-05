@@ -44,6 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AirLineMax.cs" />
+    <Compile Include="Civil.cs" />
+    <Compile Include="Company.cs" />
+    <Compile Include="ConsoleTrigger.cs" />
+    <Compile Include="Military.cs" />
+    <Compile Include="MainProgram.cs" />
+    <Compile Include="PlaneType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
