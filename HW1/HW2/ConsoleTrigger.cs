@@ -160,31 +160,39 @@ namespace HW2
                     switch (userInput)
                     {
                         case "1":
-                            WriteLine();
+                            Console.Clear();
                             CreatePlaneConsole();
                             WriteLine();
                             break;
                         case "2":
+                            Console.Clear();
                             ShowPlanes();
                             WriteLine();
                             break;
                         case "3":
+                            Console.Clear();
                             SortPlanesBySeatsCount();
                             WriteLine();
                             break;
                         case "4":
+                            Console.Clear();
                             SortPlanesByWeight();
                             WriteLine();
                             break;
                         case "5":
+                            Console.Clear();
                             GetPlanesByType();
                             WriteLine();
                             break;
                         case "6":
+                            Console.Clear();
+                            WriteLine("Planes weight:");
                             GetAllPlanesWeight();
                             WriteLine();
                             break;
                         case "7":
+                            Console.Clear();
+                            WriteLine("Planes flight capacity");
                             GetAllPlanesFlightCapacity();
                             WriteLine();
                             break;
